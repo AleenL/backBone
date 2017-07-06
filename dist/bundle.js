@@ -79,12 +79,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 function component() {
     var element = __WEBPACK_IMPORTED_MODULE_1_jquery___default.a('<div></div>')
 
-    element.html(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['hello', 'webpack'], ' '))
+    element.html(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.join(['hi', 'world', 'jesses'], ' '))
 
     return element.get(0)
 }
 
 document.body.appendChild(component())
+console.log(1)
 
 /***/ }),
 /* 1 */
