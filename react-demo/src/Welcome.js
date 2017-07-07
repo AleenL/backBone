@@ -7,16 +7,21 @@ class Welcome extends React.Component {
         super(props)
         this.state = {
             data: new Date(),
-            test: 1
+            time: 1
         }
+
+        setInterval(() => {
+            this.setState({
+                data: new Date()
+            })
+            this.setState({
+                time: this.state.time + 1
+            })
+        }, 1000)
     }
-    componentWillMount() {
-        this.setState({
-            data: new Date(),
-            test: 'componentWillMount'
-        })
-        console.log('我将要插入文档啦！')
-    }
+
+
+
     render() {
         console.log('进行render操作')
         return ( <
@@ -34,24 +39,8 @@ class Welcome extends React.Component {
             div >
         )
     }
-    componentDidMount() {
-        this.setState({
-            data: new Date(),
-            test: 'componentDidMount'
-        })
-        console.log('已经完成了！！')
-    }
-
-
-    componentDidUpdate() {
-        this.setState({
-            data: new Date(),
-            test: 'componentDidUpdate'
-        })
-    }
-
-    componentWillUnmount() {
-        console.log('我已经死了 -A-')
+    componetDidMount() {
+        console.log(1)
     }
 }
 
