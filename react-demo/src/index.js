@@ -4,10 +4,10 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import Welcome from './Welcome';
-import './Welcome.css'
+
 
 ReactDOM.render( <
-    Welcome / > ,
+    Welcome width = "120px" / > ,
     document.getElementById('root2')
 );
 
