@@ -7,7 +7,7 @@ import Welcome from './Welcome';
 
 
 ReactDOM.render( <
-    Welcome width = "120px" / > ,
+    Welcome / > ,
     document.getElementById('root2')
 );
 
