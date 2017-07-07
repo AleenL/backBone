@@ -10,6 +10,7 @@ class Welcome extends React.Component {
             time: 0
         }
         var i = 1;
+        console.log("初始化完成")
         setInterval(() => {
             this.setState({
                 data: new Date()
@@ -19,7 +20,11 @@ class Welcome extends React.Component {
             })
         }, 1000)
     }
+    componentWillMount() {
+        console.log('我将要插入文档啦！')
+    }
     render() {
+        console.log('进行render操作')
         return ( <
             div >
             <
@@ -34,6 +39,9 @@ class Welcome extends React.Component {
             /
             div >
         )
+    }
+    componentDidMount() {
+        console.log('已经完成了！！')
     }
 }
 
