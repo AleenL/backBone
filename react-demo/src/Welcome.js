@@ -9,11 +9,6 @@ class Welcome extends React.Component {
             data: new Date(),
             test: 1
         }
-        this.setState({
-            data: new Date(),
-            test: 'constructor'
-        })
-        console.log("我已经开始初始化props和state了")
     }
     componentWillMount() {
         this.setState({
@@ -23,10 +18,6 @@ class Welcome extends React.Component {
         console.log('我将要插入文档啦！')
     }
     render() {
-        this.setState({
-            data: new Date(),
-            test: 'render'
-        })
         console.log('进行render操作')
         return ( <
             div >
@@ -51,19 +42,6 @@ class Welcome extends React.Component {
         console.log('已经完成了！！')
     }
 
-    componentWillUpdate() {
-        this.setState({
-            data: new Date(),
-            test: 'componentWillUpdate'
-        })
-    }
-
-    shouldComponentUpdate() {
-        this.setState({
-            data: new Date(),
-            test: 'shouldComponentUpdate'
-        })
-    }
 
     componentDidUpdate() {
         this.setState({
