@@ -7,23 +7,26 @@ class Welcome extends React.Component {
         super(props)
         this.state = {
             data: new Date(),
-            time: 0
+            test: 1
         }
-        var i = 1;
-        console.log("初始化完成")
-        setInterval(() => {
-            this.setState({
-                data: new Date()
-            })
-            this.setState({
-                time: i--
-            })
-        }, 1000)
+        this.setState({
+            data: new Date(),
+            test: 'constructor'
+        })
+        console.log("我已经开始初始化props和state了")
     }
     componentWillMount() {
+        this.setState({
+            data: new Date(),
+            test: 'componentWillMount'
+        })
         console.log('我将要插入文档啦！')
     }
     render() {
+        this.setState({
+            data: new Date(),
+            test: 'render'
+        })
         console.log('进行render操作')
         return ( <
             div >
@@ -41,7 +44,36 @@ class Welcome extends React.Component {
         )
     }
     componentDidMount() {
+        this.setState({
+            data: new Date(),
+            test: 'componentDidMount'
+        })
         console.log('已经完成了！！')
+    }
+
+    componentWillUpdate() {
+        this.setState({
+            data: new Date(),
+            test: 'componentWillUpdate'
+        })
+    }
+
+    shouldComponentUpdate() {
+        this.setState({
+            data: new Date(),
+            test: 'shouldComponentUpdate'
+        })
+    }
+
+    componentDidUpdate() {
+        this.setState({
+            data: new Date(),
+            test: 'componentDidUpdate'
+        })
+    }
+
+    componentWillUnmount() {
+        console.log('我已经死了 -A-')
     }
 }
 
