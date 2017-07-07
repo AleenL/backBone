@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import Welcome from './Welcome';
+import './Welcome.css'
 
 ReactDOM.render( <
-    div className = 'title' >
-    你好， 世界！ <
-    /div>,
+    Welcome / > ,
     document.getElementById('root2')
 );
 
+//setInterval(tick, 1000);
 registerServiceWorker()
