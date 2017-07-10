@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
-import 'normalize.css'
+import 'normalize.css';
+import * as localStore from './localStore'
 
  class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
             newTodo: '',
-            todoList: [
-            ]
+            todoList: localStore.load('todoList') || []
         }
     }
     render() {
-        	console.log(2)
         let todos = this.state.todoList
         	.filter((item) => !item.deleted) //过滤掉deleted为ture的值，留下不等于true的值
         	.map((item, index) =>{//遍历数组todoList中的值
@@ -25,7 +24,6 @@ import 'normalize.css'
             		</li>)     
         })
         
-        //console.log(todos)
         return ( 
         	<div className = "App" >
             	<h1> 我的待办 </h1> 
@@ -40,18 +38,20 @@ import 'normalize.css'
         )
     }
     
+    componentWillUpdate(){
+    	console.log(1)
+    	localStore.save('todoList', this.state.todoList)
+    	
+    }
     delete(event, todo){
     	todo.deleted = true
     	this.setState(this.state)//重置了state的值
-    	console.log(this.state)
+
     }
     
     toggle(e,todo){
-    	//console.log(todo.status)
     	todo.status = todo.status === 'completed' ? '' : 'completed' //判断todo.states是否等于completed，
     	this.setState(this.state)
-    	console.log(1)
-    	//console.log(todo)
     }
     
     changeTitle(event){
