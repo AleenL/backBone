@@ -8,29 +8,74 @@ import 'normalize.css'
     constructor(props) {
         super(props)
         this.state = {
-            newTodo: 'test',
+            newTodo: '',
             todoList: [
-                { id: 1, title: '我的第一个代办' },
-                { id: 2, title: '我的第二个待办'},
             ]
         }
     }
     render() {
-        let todos = this.state.todoList.map((item, index) => {
-            return (<li>
-						<TodoItem todo={ item } />           	
-            		</li>)
+        let todos = this.state.todoList.map((item, index) => {//遍历数组todoList中的值
+            return (<li key={index}>
+						<TodoItem todo={ item } /*定义todo为this.state.todoList中值*/ 
+						onToggle = {this.toggle.bind(this)} 
+						onDelete = {this.delete.bind(this)}/>
+            		</li>)     
         })
+        
+        //console.log(todos)
         return ( 
         	<div className = "App" >
             	<h1> 我的待办 </h1> 
             	<div className = 'inputWrapper'>
-            		<TodoInput content = { this.state.newTodo }/>
+            		<TodoInput content = { this.state.newTodo } /*定义content为this.state.newTodo*/ 
+            		onChange = {this.changeTitle.bind(this)} 
+            		onSubmit = {this.addTodo.bind(this)}
+            		/>
             	</div>
             	<ol> { todos } </ol> 
             </div >
         )
     }
+    
+    delete(event, todo){
+    	todo.deleted = true
+    	this.setState(this.state)
+    }
+    
+    toggle(e,todo){
+    	//console.log(todo.status)
+    	todo.status = todo.status === 'completed' ? '' : 'completed' //判断todo.states是否等于completed，
+    	this.setState(this.state)
+    	//console.log(todo)
+    }
+    
+    changeTitle(event){
+    	this.setState({
+    		newTodo: event.target.value,
+    		todoList: this.state.todoList
+    	})
+    }
+	
+    addTodo(event){
+    	this.state.todoList.push({
+    		id: idMarker(),
+    		title: event.target.value,
+    		status: 'null',
+    		deleted: false
+    	})
+    	
+    	this.setState({
+    		newTodo: '',
+    		todoList: this.state.todoList
+    	})
+    }
 }
 
 export default App;
+
+let id = 0
+
+function idMarker(){
+	id += 1
+	return id
+}
