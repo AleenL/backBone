@@ -16,6 +16,7 @@ class TodoInput extends Component {
     		//console.log(this.props.onSubmit.call())
     		//this.props.onSubmit(e)
     		this.props.onSubmit(e)
+    		
     	}
     }
 }
