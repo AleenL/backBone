@@ -14,8 +14,11 @@ import 'normalize.css'
         }
     }
     render() {
-        let todos = this.state.todoList.map((item, index) => {//遍历数组todoList中的值
-            return (<li key={index}>
+        	console.log(2)
+        let todos = this.state.todoList
+        	.filter((item) => !item.deleted) //过滤掉deleted为ture的值，留下不等于true的值
+        	.map((item, index) =>{//遍历数组todoList中的值
+        	return (<li key={index}>
 						<TodoItem todo={ item } /*定义todo为this.state.todoList中值*/ 
 						onToggle = {this.toggle.bind(this)} 
 						onDelete = {this.delete.bind(this)}/>
@@ -39,13 +42,15 @@ import 'normalize.css'
     
     delete(event, todo){
     	todo.deleted = true
-    	this.setState(this.state)
+    	this.setState(this.state)//重置了state的值
+    	console.log(this.state)
     }
     
     toggle(e,todo){
     	//console.log(todo.status)
     	todo.status = todo.status === 'completed' ? '' : 'completed' //判断todo.states是否等于completed，
     	this.setState(this.state)
+    	console.log(1)
     	//console.log(todo)
     }
     
