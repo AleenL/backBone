@@ -8,7 +8,7 @@ export default class TodoItem extends Component {
 			<div  className={this.props.todo.status}>
 				<input type='checkbox'	checked={this.props.todo.status === 'completed'/*判断this.props.todo.status是否等于completed*/}
 				onChange = {this.toggle.bind(this)}/>{this.props.todo.title}
-				<button onClick = {this.delete.bind(this)}> delete </button>
+				<button onClick = {this.delete.bind(this)}/*添加删除按钮*/> delete </button>       
 			</div>
 		); //获取todo中的title
 	}
