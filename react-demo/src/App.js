@@ -3,14 +3,16 @@ import './App.css';
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 import 'normalize.css';
-import * as localStore from './localStore'
+import getCity from './getCity';
+import $ from 'jquery'
 
  class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
             newTodo: '',
-            todoList: localStore.load('todoList') || []
+            todoList: [],
+            city: " ",
         }
     }
     render() {
@@ -26,7 +28,7 @@ import * as localStore from './localStore'
         
         return ( 
         	<div className = "App" >
-            	<h1> 我的待办 </h1> 
+            	<getCity />
             	<div className = 'inputWrapper'>
             		<TodoInput content = { this.state.newTodo } /*定义content为this.state.newTodo*/ 
             		onChange = {this.changeTitle.bind(this)} 
@@ -39,14 +41,27 @@ import * as localStore from './localStore'
     }
     
     componentWillUpdate(){
-    	console.log(1)
-    	localStore.save('todoList', this.state.todoList)
+    	//console.log(1)
     	
     }
     delete(event, todo){
     	todo.deleted = true
     	this.setState(this.state)//重置了state的值
 
+    }
+    
+    gatCity(e){
+    	console.log(1)
+    	let cityUrl = "https://api.map.baidu.com/location/ip?ak=O6SDTtgTtymLR2UzklNO9eYolcZLXI7Q";
+        $.ajax({
+            url:cityUrl,
+            type:'get',
+            async: false,
+            dataType: 'jsonp',
+            success: function(data){
+              console.log(data)
+               }
+          })
     }
     
     toggle(e,todo){

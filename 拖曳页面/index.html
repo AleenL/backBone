@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>拖拽</title>
+		<link rel="stylesheet" href="css/normalize.css" />
+		<script src="js/jquery.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				list-style: none;
+				position: relative;
+			}
+			
+			.add_link_color {
+				background: rgb(251, 248, 244);
+			}
+			
+			body {
+				background: rgb(236, 236, 236);
+			}
+			
+			.layout {
+				width: 1200px;
+				margin: 50px auto;
+				background: #fff;
+			}
+			
+			.layout .content_layout {
+				width: 1140px;
+				margin: 30px auto;
+			}
+			
+			.layout .content_layout .class_title {
+				padding: 30px 0;
+			}
+			
+			.layout .content_layout .class_title span:first-child {
+				margin: 0 5px;
+			}
+			
+			.layout .content_layout .class_title span {
+				color: #aaa;
+			}
+			
+			.layout .content_layout .alert_box {
+				margin: 20px 0 0 0;
+				text-indent: 30px;
+				height: 50px;
+				width: 100%;
+				line-height: 50px;
+				border: 2px dotted #ccc;
+				background: rgb(237, 249, 255);
+				color: rgb(144, 144, 144);
+				font-size: 14px;
+			}
+			
+			.layout .content_layout .content_inside_layout {
+				margin: 0 150px;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_title {
+				color: rgb(214, 194, 174);
+				padding: 50px 0;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li {
+				margin-bottom: 20px;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li>div {
+				display: flex;
+				justify-content: space-between;
+				align-content: center;
+				padding: 10px 0;
+				border: 1px solid #ddd;
+				background: rgb(251, 248, 244);
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li i {
+				margin: 0 5px;
+				position: relative;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items .icon i:first-child::after {
+				content: '拖动可调整位置';
+				display: block;
+				clear: both;
+				width: 95px;
+				font-size: 12px;
+				line-height: 1.5em;
+				text-align: center;
+				border-radius: 5px;
+				border: 1px solid #aaa;
+				position: absolute;
+				background: rgb(241, 242, 242);
+				box-shadow: 0px 0px 10px #aaa;
+				top: 30px;
+				left: -30px;
+				display: none;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children {
+				overflow: hidden;
+				margin-top: 20px;
+				width: 100%;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li {
+				padding: 0;
+				height: 40px;
+				margin-left: 50px;
+				font-size: 14px;
+				display: flex;
+				justify-content: space-between;
+				line-height: 40px;
+				margin-bottom: 20px;
+				border: 1px solid #aaa;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li span {
+				padding: 0 10px;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) {
+				width: 255px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-left: 1px solid #aaa;
+				position: relative;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) span:last-child {
+				margin-left: 20px;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li.add_li {
+				color: #aaa;
+				border-color: #ccc;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li .text_of {
+				width: 60%;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p.video_link {
+				justify-content: center;
+			}
+			
+			.layout .content_layout .content_inside_layout .add_new_title {
+				margin: 50px auto;
+				width: 100px;
+				text-align: center;
+				color: #aaa
+			}
+			
+			.layout .content_layout .content_inside_layout .control_botton {
+				padding: 120px 0 150px 0
+			}
+			
+			.layout .content_layout .content_inside_layout .control_botton a {
+				display: inline-block;
+				width: 130px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				text-decoration: none;
+				color: #fff;
+			}
+			
+			.layout .content_layout .content_inside_layout .control_botton a:first-child {
+				background: rgb(32, 108, 250);
+			}
+			
+			.layout .content_layout .content_inside_layout .control_botton a:last-child {
+				background: rgb(151, 151, 151);
+			}
+			
+			.layout .content_layout .content_inside_layout .folding_page {
+				display: inline-block;
+				width: 25px;
+				height: 25px;
+				text-align: center;
+				cursor: pointer;
+			}
+			
+			.layout .content_layout .content_inside_layout .add_new_parent {
+				width: 200px;
+				height: 200px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class='layout'>
+			<div class='content_layout'>
+				<div class='class_title'>
+					<p>班课<span>></span><span>创建录播课程</span></p>
+				</div>
+				<div class='alert_box'>
+					<i class='iconfont'>提示</i>录播课程可以上架对外售卖，也可以共享到班级中。
+				</div>
+				<div class='content_inside_layout'>
+					<div class='content_inside_title'>
+						<h3>课程目录</h3></div>
+					<div class='content_inside_box'>
+						<ul class='content_inside_items'>
+							<li>
+								<div>
+									<h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3>
+									<div class='icon'><i>托</i><i>删</i></div>
+								</div>
+
+								<ul class='content_inside_items_children'>
+									<li>
+										<p><span>01</span><span class='text_of'>心理咨询试听</span></p>
+										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
+									</li>
+									<li class='add_li'>
+										<p><span>+</span>新增</p>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<div>
+									<h3><span class='folding_page'>></span><span class='text_of'>02 二级论文指导</span></h3>
+									<div class='icon'><i>托</i><i>删</i></div>
+								</div>
+
+								<ul class='content_inside_items_children'>
+									<li>
+										<p><span>第一课</span><span class='text_of'>心理活动的生理基础</span></p>
+										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
+									</li>
+									<li>
+										<p><span>第二课</span><span class='text_of'>思维的概念级种类和意识与注意</span></p>
+										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
+									</li>
+									<li>
+										<p><span>第三课</span><span class='text_of'>思维的概念级种类和意识与注意</span></p>
+										<p class='video_link add_link_color'>+关联视频</p>
+									</li>
+									<li class='add_li add_link_color'>
+										<p><span>+</span>新增</p>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div class='add_new_title'>
+						<p class='add_new_parent'><i>+</i>新增</p>
+					</div>
+					<div class='control_botton'>
+						<a href="javascript():;" class='next_btn'>下一步</a>
+						<a href="javascript():;" class='cancel_btn'>取消</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			let foldingBtn = $('.folding_page'),
+				ulPage = $('.content_inside_items_children'),
+				flag = false;
+			addChild = $('.add_li');
+			addParent = $('.add_new_parent');
+			parentUlPage = $('.content_inside_items')
+			addChild.on('click', function(e) {
+				console.log(1)
+				var childIndex = addChild.index(this);
+				newLi = "<li><p></p><p class='video_link add_link_color'>+关联视频</p></li>"
+				$(this).before(newLi)
+			})
+			addParent.on('click', function() {
+					parentLi = "<li><div><h3><span class='folding_page'>></span><span class='text_of'>请输入标题</span></h3><div class='icon'><i>托</i><i>删</i></div></div></li>"
+					parentUlPage.append(parentLi)
+				})
+				//点击子文件消失
+			foldingBtn.on('click', function(e) {
+				var Index = foldingBtn.index(this)
+				ulPage.eq(Index).toggle('normal')
+				console.log(1)
+			})
+			$(".text_of").delegate("span", "click", function() {
+				// "$(this)" is the node that was clicked
+				console.log("you clicked a link!");
+			});
+
+				/*$(".text_of"). on('click',function(e) {
+					alert(e.target)
+					var td = $(e.target);
+					var txt = td.text();
+					var input = $("<input type='text' style='width:200px' value='" + txt + "'/>");
+					td.html(input);
+					td.css({
+							'overflow': 'visible	',
+							'position': 'absolute',
+							'z-index': '22',
+							'text-overflow': 'normal',
+							'top': '0',
+							'left': '0'
+						})
+					input.click(function() {
+						return false;
+					});
+					//获取焦点 
+					input.trigger("focus");
+					//文本框失去焦点后提交内容，重新变为文本 
+					input.blur(function() {
+						var newtxt = $(this).val();
+						//判断文本有没有修改 
+						td.html(newtxt);
+						td.css({
+						'overflow': 'hidden',
+						'position': 'relative',
+						'text-overflow': 'ellipsis',
+					})
+					})
+				})*/
+		</script>
+
+	</body>
+
+</html>
