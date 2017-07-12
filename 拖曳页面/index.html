@@ -12,7 +12,7 @@
 				padding: 0;
 				box-sizing: border-box;
 				list-style: none;
-				position: relative;
+				
 			}
 			
 			.add_link_color {
@@ -69,15 +69,18 @@
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li {
 				margin-bottom: 20px;
+				
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li>div {
 				display: flex;
+				height: 50px;
 				justify-content: space-between;
 				align-content: center;
-				padding: 10px 0;
+			line-height: 50px;
 				border: 1px solid #ddd;
 				background: rgb(251, 248, 244);
+				position: relative;
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li i {
@@ -101,12 +104,13 @@
 				top: 30px;
 				left: -30px;
 				display: none;
+				
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children {
-				overflow: hidden;
 				margin-top: 20px;
 				width: 100%;
+				position: relative;
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li {
@@ -119,6 +123,7 @@
 				line-height: 40px;
 				margin-bottom: 20px;
 				border: 1px solid #aaa;
+				position: relative;
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li span {
@@ -216,13 +221,13 @@
 					<div class='content_inside_box'>
 						<ul class='content_inside_items'>
 							<li class='content_inside_li'>
-								<div>
+								<div class='content_inside_li_title'>
 									<h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3>
 									<div class='icon'><i>托</i><i>删</i></div>
 								</div>
 
 								<ul class='content_inside_items_children'>
-									<li>
+									<li class='items_children_li'>
 										<p><span>01</span><span class='text_of'>心理咨询试听</span></p>
 										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
 									</li>
@@ -232,21 +237,21 @@
 								</div>
 							</li>
 							<li class='content_inside_li'>
-								<div>
+								<div class='content_inside_li_title'>
 									<h3><span class='folding_page'>></span><span class='text_of'>02 二级论文指导</span></h3>
 									<div class='icon'><i>托</i><i>删</i></div>
 								</div>
 
 								<ul class='content_inside_items_children'>
-									<li>
+									<li class='items_children_li'>
 										<p><span>第一课</span><span class='text_of'>心理活动的生理基础</span></p>
 										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
 									</li>
-									<li>
+									<li class='items_children_li'>
 										<p><span>第二课</span><span class='text_of'>思维的概念级种类和意识与注意</span></p>
 										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
 									</li>
-									<li>
+									<li class='items_children_li'>
 										<p><span>第三课</span><span class='text_of'>思维的概念级种类和意识与注意</span></p>
 										<p class='video_link add_link_color'>+关联视频</p>
 									</li>
@@ -268,7 +273,7 @@
 			</div>
 		</div>
 		<script src="js/strengs.js"></script>
-		<script>
+		<!--<script>
 			$.fn.kpdragsort = function(options) {
 				var container = this;
 				$(container).children().off("mousedown").mousedown(function(e) {
@@ -277,6 +282,7 @@
 					if (e.target.nodeName == "DIV"){
 						$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
 					}
+					console.log(e.target.className)
 					e.preventDefault(); // 阻止选中文本
 					var x = e.pageX;
 					var y = e.pageY;
@@ -330,6 +336,7 @@
 							var a2 = p.left + obj.width();
 							var a3 = p.top;
 							var a4 = p.top + obj.height();
+							console.log(obj)
 							// 移动虚线框
 							if (a1 < ml && ml < a2 && a3 < mt && mt < a4) {
 								if (!obj.next("#kp_widget_holder").length) {
@@ -374,7 +381,7 @@
 			}
 			$(".content_inside_items_children").kpdragsort();
 			$(".content_inside_items").kpdragsort();
-		</script>
+		</script>-->
 	</body>
 
 </html>
