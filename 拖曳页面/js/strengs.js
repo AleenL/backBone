@@ -16,14 +16,14 @@ var Animate = (function() {
 
 	_Animate.prototype.bind = function() {
 		var that = this
-		this.$addChild.on('click', function(e) {
+		$(document).on('click', '.add_li',function(e) {
 			var childIndex = that.$addChild.index(this);
 			newLi = "<li><p></p><p class='video_link add_link_color'>+关联视频</p></li>"
 			$(this).before(newLi)
 		})
 
 		this.$addParent.on('click', function() {
-			parentLi = "<li><div><h3><span class='folding_page'>></span><span class='text_of'>请输入标题</span></h3><div class='icon'><i>托</i><i>删</i></div></div></li>"
+			parentLi = "<li><div><h3><span class='folding_page'>></span><span class='text_of'>请输入标题</span></h3><div class='icon'><i>托</i><i>删</i></div></div><ul class='content_inside_items_children'><li class='add_li add_link_color'><p><span>+</span>新增</p></li></ul></li>"
 			that.$parentUlPage.append(parentLi)
 		})
 
