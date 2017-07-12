@@ -4,7 +4,8 @@ var Animate = (function() {
 		this.init();
 		this.bind();
 	}
-
+	
+	//绑定元素，初始化数据
 	_Animate.prototype.init = function() {
 		var $foldingBtn = this.$foldingBtn = this.$ct.find('.folding_page'),
 			$ulPage = this.$ulPage = this.$ct.find('.content_inside_items_children'),
@@ -13,7 +14,7 @@ var Animate = (function() {
 			$parentUlPage = this.$parentUlPage = this.$ct.find('.content_inside_items'),
 			$inputText = this.$inputText = this.$ct.find('.text_of')
 	}
-
+	//绑定事件
 	_Animate.prototype.bind = function() {
 		var that = this
 		$(document).on('click', '.add_li',function(e) {
@@ -27,9 +28,9 @@ var Animate = (function() {
 			that.$parentUlPage.append(parentLi)
 		})
 
-		this.$foldingBtn.on('click', function(e) {
-			var Index = that.$foldingBtn.index(this)
-			that.$ulPage.eq(Index).toggle('normal')
+		$(document).on('click', '.folding_page',function(e) {
+			var Index = $('.folding_page').index(this)
+			$('.content_inside_items_children').eq(Index).toggle('normal')
 		})
 
 		$(document).on('click', '.text_of', function(e) {
