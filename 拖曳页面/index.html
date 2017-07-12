@@ -282,7 +282,6 @@
 					if (e.target.nodeName == "DIV"){
 						$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
 					}
-					console.log(e.target.className)
 					e.preventDefault(); // 阻止选中文本
 					var x = e.pageX;
 					var y = e.pageY;
@@ -336,6 +335,7 @@
 							var a2 = p.left + obj.width();
 							var a3 = p.top;
 							var a4 = p.top + obj.height();
+							console.log(this)
 							console.log(obj)
 							// 移动虚线框
 							if (a1 < ml && ml < a2 && a3 < mt && mt < a4) {
@@ -380,8 +380,8 @@
 				});
 			}
 			$(".content_inside_items_children").kpdragsort();
-			$(".content_inside_items").kpdragsort();
-		</script>-->
+			$(".content_inside_items").kpdragsort();-->
+		</script>
 	</body>
 
 </html>

@@ -94,8 +94,7 @@ var Animate = (function() {
 					ltop = p.top,
 					kp_only = true
 
-				console.log(w2, h2)
-					//添加虚线框架
+				//添加虚线框架
 				_this.before('<li id="kp_widget_holder"></li>')
 				var wid = $('#kp_widget_holder')
 				wid.css({
@@ -120,7 +119,6 @@ var Animate = (function() {
 					// 移动选中块
 					var l = left + e.pageX - x;
 					var t = ltop + e.pageY - y;
-					console.log(l, t)
 					_this.css({
 						"left": l,
 						"top": t
@@ -128,19 +126,18 @@ var Animate = (function() {
 					// 选中块的中心坐标
 					var ml = l + w2;
 					var mt = t + h2;
-					console.log(ml, mt)
-						// 遍历所有块的坐标
-					node.children().not($(this)).not(wid).each(function(i) {
-						var obj = $(node);
+					// 遍历所有块的坐标
+					$(node).children().not(_this).not(wid).each(function(i) {
+						var obj = $(this);
 						var p = obj.offset();
 						var a1 = p.left;
 						var a2 = p.left + obj.width();
 						var a3 = p.top;
 						var a4 = p.top + obj.height();
-						console.log(obj)
-						console.log(a1, a2, a3, a4, ml, mt)
-							// 移动虚线框
+						console.log(this)
+						// 移动虚线框
 						if (a1 < ml && ml < a2 && a3 < mt && mt < a4) {
+							console.log(1)
 							if (!obj.next("#kp_widget_holder").length) {
 								wid.insertAfter(this);
 							} else {
@@ -148,35 +145,6 @@ var Animate = (function() {
 							}
 							return;
 						}
-					});
-
-					$(document).mouseup(function() {
-						if (e.target.nodeName == "DIV") {
-							$(e.target).parent().parent().find('.content_inside_items_children').fadeIn()
-						}
-						$(document).off('mouseup').off('mousemove');
-						// 检查容器为空的情况
-						node.each(function() {
-							var obj = $(this).children();
-							var len = obj.length;
-							if (len == 1 && obj.is(_this)) {
-								$("<li></li>").appendTo(this).attr("class", "kp_widget_block").css({
-									"height": 100
-								});
-							} else if (len == 2 && obj.is(".kp_widget_block")) {
-								$(this).children(".kp_widget_block").remove();
-							}
-						});
-						// 拖拽回位，并删除虚线框
-						var p = wid.offset();
-						_this.animate({
-							"left": p.left,
-							"top": p.top
-						}, 100, function() {
-							_this.removeAttr("style");
-							wid.replaceWith(_this);
-							kp_only = null;
-						});
 					});
 				})
 			} //去除所有非li元素的条件
@@ -192,4 +160,4 @@ var Animate = (function() {
 	}
 })()
 
-Animate.init($('.content_inside_items_children'))
+Animate.init($('body'))
