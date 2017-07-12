@@ -128,14 +128,14 @@ var Animate = (function() {
 					var mt = t + h2;
 					// 遍历所有块的坐标
 					$(node).children().not(_this).not(wid).each(function(i) {
-						var obj = $(this);
+						var obj = $(e.target);
 						var p = obj.offset();
 						var a1 = p.left;
 						var a2 = p.left + obj.width();
 						var a3 = p.top;
 						var a4 = p.top + obj.height();
 						console.log(this)
-						// 移动虚线框
+							// 移动虚线框
 						if (a1 < ml && ml < a2 && a3 < mt && mt < a4) {
 							console.log(1)
 							if (!obj.next("#kp_widget_holder").length) {
@@ -148,6 +148,34 @@ var Animate = (function() {
 					});
 				})
 			} //去除所有非li元素的条件
+			$(document).mouseup(function() {
+				if (e.target.nodeName == "DIV") {
+					$(e.target).parent().parent().find('.content_inside_items_children').fadeIn()
+				}
+				$(document).off('mouseup').off('mousemove');
+				// 检查容器为空的情况
+				$(container).each(function() {
+					var obj = $(this).children();
+					var len = obj.length;
+					if (len == 1 && obj.is(_this)) {
+						$("<li></li>").appendTo(this).attr("class", "kp_widget_block").css({
+							"height": 100
+						});
+					} else if (len == 2 && obj.is(".kp_widget_block")) {
+						$(this).children(".kp_widget_block").remove();
+					}
+				});
+				// 拖拽回位，并删除虚线框
+				var p = wid.offset();
+				_this.animate({
+					"left": p.left,
+					"top": p.top
+				}, 100, function() {
+					_this.removeAttr("style");
+					wid.replaceWith(_this);
+					kp_only = null;
+				});
+			});
 		})
 	}
 
