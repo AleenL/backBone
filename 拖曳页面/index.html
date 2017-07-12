@@ -138,9 +138,11 @@
 				margin-left: 20px;
 			}
 			
-			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li.add_li {
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .add_li {
 				color: #aaa;
 				border-color: #ccc;
+				width: 790px;
+				margin-left: 50px;
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li .text_of {
@@ -224,10 +226,10 @@
 										<p><span>01</span><span class='text_of'>心理咨询试听</span></p>
 										<p><i>播</i><span class='text_of'>心理活动的生理基础</span><span>00:50:00</span></p>
 									</li>
-									<li class='add_li'>
-										<p><span>+</span>新增</p>
-									</li>
 								</ul>
+								<div class='add_li'>
+										<p><span>+</span>新增</p>
+								</div>
 							</li>
 							<li class='content_inside_li'>
 								<div>
@@ -248,10 +250,10 @@
 										<p><span>第三课</span><span class='text_of'>思维的概念级种类和意识与注意</span></p>
 										<p class='video_link add_link_color'>+关联视频</p>
 									</li>
-									<li class='add_li add_link_color'>
-										<p><span>+</span>新增</p>
-									</li>
 								</ul>
+								<div class='add_li'>
+										<p><span>+</span>新增</p>
+								</div>
 							</li>
 						</ul>
 					</div>
@@ -265,66 +267,7 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/strengs.js">
-			/*let foldingBtn = $('.folding_page'),
-										ulPage = $('.content_inside_items_children'),
-										flag = false;
-									addChild = $('.add_li');
-									addParent = $('.add_new_parent');
-									parentUlPage = $('.content_inside_items')
-									addChild.on('click', function(e) {
-										console.log(1)
-										var childIndex = addChild.index(this);
-										newLi = "<li><p></p><p class='video_link add_link_color'>+关联视频</p></li>"
-										$(this).before(newLi)
-									})
-									addParent.on('click', function() {
-											parentLi = "<li><div><h3><span class='folding_page'>></span><span class='text_of'>请输入标题</span></h3><div class='icon'><i>托</i><i>删</i></div></div></li>"
-											parentUlPage.append(parentLi)
-										})
-										//点击子文件消失
-									foldingBtn.on('click', function(e) {
-										var Index = foldingBtn.index(this)
-										ulPage.eq(Index).toggle('normal')
-										console.log(1)
-									})
-									$(".text_of").delegate("span", "click", function() {
-										// "$(this)" is the node that was clicked
-										console.log("you clicked a link!");
-									});
-
-										$(".text_of"). on('click',function(e) {
-											alert(e.target)
-											var td = $(e.target);
-											var txt = td.text();
-											var input = $("<input type='text' style='width:200px' value='" + txt + "'/>");
-											td.html(input);
-											td.css({
-													'overflow': 'visible	',
-													'position': 'absolute',
-													'z-index': '22',
-													'text-overflow': 'normal',
-													'top': '0',
-													'left': '0'
-												})
-											input.click(function() {
-												return false;
-											});
-											//获取焦点 
-											input.trigger("focus");
-											//文本框失去焦点后提交内容，重新变为文本 
-											input.blur(function() {
-												var newtxt = $(this).val();
-												//判断文本有没有修改 
-												td.html(newtxt);
-												td.css({
-												'overflow': 'hidden',
-												'position': 'relative',
-												'text-overflow': 'ellipsis',
-											})
-											})
-										})*/
-		</script>
+		<script src="js/strengs.js"></script>
 		<script>
 			$.fn.kpdragsort = function(options) {
 				var container = this;
@@ -342,7 +285,7 @@
 					var h = _this.height();
 					var w2 = w / 2;
 					var h2 = h / 2;
-					var p = _this.offset();
+					var p = _this.position();
 					var left = p.left;
 					var top = p.top;
 					window.kp_only = true;
@@ -351,8 +294,10 @@
 					var wid = $("#kp_widget_holder");
 					wid.css({
 						"border": "2px dashed #ccc",
-						"height": _this.outerHeight(true) - 4
+						"height": _this.outerHeight(true) - 100
 					});
+					
+					
 					// 保持原来的宽高
 					_this.css({
 						"width": w,

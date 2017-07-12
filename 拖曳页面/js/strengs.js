@@ -20,7 +20,7 @@ var Animate = (function() {
 		$(document).on('click', '.add_li',function(e) {
 			var childIndex = that.$addChild.index(this);
 			newLi = "<li><p></p><p class='video_link add_link_color'>+关联视频</p></li>"
-			$(this).before(newLi)
+			$(this).siblings('ul').append(newLi)
 		})
 
 		this.$addParent.on('click', function() {
@@ -31,6 +31,7 @@ var Animate = (function() {
 		$(document).on('click', '.folding_page',function(e) {
 			var Index = $('.folding_page').index(this)
 			$('.content_inside_items_children').eq(Index).toggle('normal')
+			$('.add_li').eq(Index).toggle('normal')
 		})
 
 		$(document).on('click', '.text_of', function(e) {
@@ -64,6 +65,12 @@ var Animate = (function() {
 			})
 		})
 	}
+	
+	_Animate.prototype.dragNode = function(node){
+		var that = this
+		$(document).on('mousedown' )
+	}
+	
 	return {
 		init: function($ct) {
 			$ct.each(function(index, node) {
