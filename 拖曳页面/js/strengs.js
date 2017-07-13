@@ -30,7 +30,7 @@ var Animate = (function() {
 		})
 		$(document).on('click', '.add_li', function(e) {
 				var childIndex = that.$addChild.index(this);
-				newLi = "<li class='items_children_li'><p><span class='text_of'>请输入标题</span></p><p class='video_link add_link_color'>+关联视频</p></li>"
+				newLi = "<li class='items_children_li'><p><span class='text_of'>请输入标题</span></p><p class='video_link add_link_color'>+关联视频</p><p class='deteled_child'><i>x</i></p></li>"
 				$(this).parent().find('.content_inside_items_children').append(newLi)
 			})
 			.on('click', '.folding_page', function(e) {
@@ -63,7 +63,7 @@ var Animate = (function() {
 			.on('click', '.text_of', function(e) {
 				var td = $(e.target);
 				var txt = td.text();
-				var input = $("<input class='input_in' type='text' style='width:200px' value='" + txt + "'/>");
+				var input = $("<input class='input_in' type='text' style='width:300px' value='" + txt + "'/>");
 				td.html(input);
 				that.moveEnd(td.find('input').get(0))
 				td.css({
