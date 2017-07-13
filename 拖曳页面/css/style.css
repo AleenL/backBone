@@ -1,0 +1,220 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	list-style: none;
+}
+
+.add_link_color {
+	background: rgb(251, 248, 244);
+}
+
+body {
+	background: rgb(236, 236, 236);
+}
+
+.layout_class_create {
+	width: 1200px;
+	margin: 50px auto;
+	background: #fff;
+}
+
+.layout_class_create .content_layout {
+	width: 1140px;
+	margin: 30px auto;
+}
+
+.layout_class_create .content_layout .class_title {
+	padding: 30px 0;
+}
+
+.layout_class_create .content_layout .class_title span:first-child {
+	margin: 0 5px;
+}
+
+.layout_class_create .content_layout .class_title span {
+	color: #aaa;
+}
+
+.layout_class_create .content_layout .alert_box {
+	margin: 20px 0 0 0;
+	text-indent: 30px;
+	height: 50px;
+	width: 100%;
+	line-height: 50px;
+	border: 2px dotted #ccc;
+	background: rgb(237, 249, 255);
+	color: rgb(144, 144, 144);
+	font-size: 14px;
+}
+
+.layout_class_create .content_layout .content_inside_layout {
+	margin: 0 150px;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_title {
+	color: rgb(214, 194, 174);
+	padding: 50px 0;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li {
+	margin-bottom: 20px;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li div:nth-child(3) {
+	width: 790px;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 1rem;
+	border: 1px solid #aaa;
+	background: rgb(251, 248, 244);
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_li_title {
+	display: flex;
+	height: 50px;
+	justify-content: space-between;
+	align-content: center;
+	line-height: 50px;
+	border: 1px solid #ddd;
+	position: relative;
+	background: rgb(251, 248, 244);
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li i {
+	margin: 0 5px;
+	position: relative;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items .icon i.drag_icon::after {
+	content: '拖动可调整位置';
+	display: block;
+	clear: both;
+	width: 95px;
+	font-size: 12px;
+	line-height: 1.5em;
+	text-align: center;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+	position: absolute;
+	background: rgb(241, 242, 242);
+	box-shadow: 0px 0px 10px #aaa;
+	top: 30px;
+	left: -30px;
+	display: none;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items .icon i.drag_icon:hover::after {
+	display: block;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children {
+	margin-top: 20px;
+	width: 100%;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li {
+	padding: 0;
+	height: 40px;
+	margin-left: 50px;
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	line-height: 40px;
+	margin-bottom: 20px;
+	border: 1px solid #aaa;
+	position: relative;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li span {
+	padding: 0 10px;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) {
+	width: 255px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-left: 1px solid #aaa;
+	position: relative;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) span:last-child {
+	margin-left: 20px;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .add_li {
+	color: #aaa;
+	border-color: #ccc;
+	width: 790px;
+	margin-left: 50px;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li .text_of {
+	width: 60%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p.video_link {
+	justify-content: center;
+}
+
+.layout_class_create .content_layout .content_inside_layout .add_new_title {
+	margin: 50px auto;
+	width: 100px;
+	text-align: center;
+	color: #aaa
+}
+
+.layout_class_create .content_layout .content_inside_layout .control_botton {
+	padding: 120px 0 150px 0
+}
+
+.layout_class_create .content_layout .content_inside_layout .control_botton a {
+	display: inline-block;
+	width: 130px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+}
+
+.layout_class_create .content_layout .content_inside_layout .control_botton a:first-child {
+	background: rgb(32, 108, 250);
+}
+
+.layout_class_create .content_layout .content_inside_layout .control_botton a:last-child {
+	background: rgb(151, 151, 151);
+}
+
+.layout_class_create .content_layout .content_inside_layout .folding_page {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	text-align: center;
+}
+
+.layout_class_create .content_layout .content_inside_layout .add_new_parent {
+	width: 200px;
+	height: 200px;
+}
+
+.deleted_node {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+}
+
+.content_inside_li_title,
+.items_children_li {
+	cursor: move;
+}
+
+.content_inside_li_title h3,
+.content_inside_li_title .icon,
+.items_children_li p {
+	cursor: default;
+}
