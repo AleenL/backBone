@@ -107,7 +107,7 @@ body {
 
 .layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:first-child{
 	display: inline-block;
-	width: 200px;
+	width: 300px;
 }
 
 .layout_class_create .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) {
