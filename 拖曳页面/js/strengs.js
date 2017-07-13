@@ -1,7 +1,6 @@
 /**
  * Created by zdf on 2017-07-13.
  */
-console.log(1)
 var Animate = (function() {
 	function _Animate($ct) {
 		this.$ct = $ct;
@@ -48,11 +47,11 @@ var Animate = (function() {
 		})
 
 		$(document).on('click', '.text_of', function(e) {
-			console.log(1)
 			var td = $(e.target);
 			var txt = td.text();
 			var input = $("<input class='input_in' type='text' style='width:200px' value='" + txt + "'/>");
 			td.html(input);
+			that.moveEnd(td.find('input').get(0))
 			td.css({
 				'position': 'absolute',
 				'z-index': '22',
@@ -79,213 +78,224 @@ var Animate = (function() {
 		})
 	}
 
-	_Animate.prototype.dragNode = function(node) {
-		var that = this
-		$(document).on('mousedown', 'li', function(e) {
-			console.log(e.target.nodeName)
-			if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
-			if(e.target.className == 'items_children_li') {
-
-				e.preventDefault() // 阻止默认事件
-				var x = e.pageX,
-					y = e.pageY,
-					_this = $(this), //点击的选中块
-					w = _this.width(),
-					h = _this.height(),
-					w2 = w / 2,
-					h2 = h / 2
-				p = _this.offset(),
-					left = p.left,
-					ltop = p.top,
-					window.kp_only = true
-				//添加虚线框架
-				_this.before('<li id="kp_widget_holder"></li>')
-				var wid = $('#kp_widget_holder')
-				wid.css({
-					"border": "2px dashed #ccc",
-					"height": _this.outerHeight(true),
-				})
-
-				//保持原有宽高
-				_this.css({
-					"width": w,
-					"height": h,
-					"position": "absolute",
-					opacity: 0.8,
-					"z-index": 99,
-					"left": p.left,
-					"top": p.top
-				});
-
-				$(document).on('mousemove', 'li', function(e) {
-
-					e.preventDefault();
-					// 移动选中块
-					var l = p.left + e.pageX - x;
-					var t = p.top + e.pageY - y;
-					_this.css({
-						"left": l,
-						"top": t
-					});
-					// 选中块的中心坐标
-					var ml = l + w2;
-					var mt = t + h2;
-					// 遍历所有块的坐标
-					$(document).find('.content_inside_items_children').children().not($(_this)).not(wid).each(function(i) {
-						var obj = $(this);
-						var p = obj.offset();
-						var a1 = p.left;
-						var a2 = p.left + obj.width();
-						var a3 = p.top;
-						var a4 = p.top + obj.height();
-						// 移动虚线框
-						if(a1 < ml && ml < a2 && a3 < mt && mt < a4) {
-							if(!obj.next("#kp_widget_holder").length) {
-								wid.insertAfter(this);
-							} else {
-								wid.insertBefore(this);
-							}
-							return;
-						}
-					});
-				})
-
-				$(document).on('mouseup', 'li', function() {
-					$(document).off('mouseup').off('mousemove');
-					// 检查容器为空的情况
-					$(document).find('.content_inside_items_children').each(function() {
-						var obj = $(this).children();
-						var len = obj.length;
-						if(len == 1 && obj.is(_this)) {
-							$("<div></div>").appendTo(this).attr("class", "kp_widget_block").css({
-								"height": 50
-							});
-						} else if(len == 2 && obj.is(".kp_widget_block")) {
-							$(this).children(".kp_widget_block").remove();
-						}
-					});
-					// 拖拽回位，并删除虚线框
-					var p2 = wid.position();
-					$(e.target).animate({
-						"left": p2.left,
-						"top": p2.top
-					}, 100, function() {
-						wid.replaceWith($(e.target));
-						$(e.target).removeAttr("style");
-						window.kp_only = null;
-					});
-					return false
-				});
-			} //去除所有非li元素的条件
-		})
-	}
-	_Animate.prototype.dragParent = function(node) {
-		var that = this
-		$(document).on('mousedown', '.content_inside_li_title', function(e) {
-			if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
-			if(e.target.className == 'content_inside_li_title') {
-				$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
-				$(e.target).parent().parent().find('.add_li').fadeOut()
-				e.preventDefault() // 阻止默认事件
-				var x = e.pageX,
-					y = e.pageY,
-					_this = $(e.target).parent(), //点击的选中块
-					w = _this.width(),
-					h = _this.find('.content_inside_li_title').height(),
-					w2 = w / 2,
-					h2 = h / 2
-				p = _this.offset(),
-					left = p.left,
-					ltop = p.top,
-					window.kp_only = true
-
-				_this.before('<li id="kp_widget_holder"></li>')
-				var wid = $('#kp_widget_holder')
-				wid.css({
-					"border": "2px dashed #ccc",
-					"height": _this.find('.content_inside_li_title').height(),
-				})
-				//保持原有宽高
-				_this.css({
-					"width": w,
-					"height": h,
-					"position": "absolute",
-					opacity: 0.8,
-					"z-index": 99,
-					"left": p.left,
-					"top": p.top
-				});
-				$(document).on('mousemove', '.content_inside_li_title', function(e) {
-					e.preventDefault();
-					// 移动选中块
-					var l = p.left + e.pageX - x;
-					var t = p.top + e.pageY - y;
-					_this.css({
-						"left": l,
-						"top": t
-					});
-					// 选中块的中心坐标
-					var ml = l + w2;
-					var mt = t + h2;
-					// 遍历所有块的坐标
-					$(document).find('.content_inside_items').children().not($(_this)).not(wid).each(function(i) {
-						var obj = $(this);
-						var p = obj.offset();
-						var a1 = p.left;
-						var a2 = p.left + obj.width();
-						var a3 = p.top;
-						var a4 = p.top + obj.height();
-						// 移动虚线框
-						if(a1 < ml && ml < a2 && a3 < mt && mt < a4) {
-							if(!obj.next("#kp_widget_holder").length) {
-								wid.insertAfter(this);
-							} else {
-								wid.insertBefore(this);
-							}
-							return;
-						}
-					});
-				})
-				$(document).on('mouseup', '.content_inside_items', function() {
-
-					$(document).off('mouseup').off('mousemove');
-					// 检查容器为空的情况
-					$(document).find('.content_inside_items').each(function() {
-						var obj = $(this).children();
-						var len = obj.length;
-						if(len == 1 && obj.is(_this)) {
-							$("<li></li>").appendTo(this).attr("class", "kp_widget_block").css({
-								"height": 50
-							});
-						} else if(len == 2 && obj.is(".kp_widget_block")) {
-							$(this).children(".kp_widget_block").remove();
-						}
-					});
-					// 拖拽回位，并删除虚线框
-					var p2 = wid.position();
-					$(e.target).parent().animate({
-						"left": p2.left,
-						"top": p2.top
-					}, 100, function() {
-						wid.replaceWith($(e.target).parent());
-						$(e.target).parent().removeAttr("style");
-						window.kp_only = null;
-					});
-					$(e.target).parent().find('.content_inside_items_children').fadeIn()
-					$(e.target).parent().find('.add_li').fadeIn()
-					return false
-				});
-			}
-
-		})
-	}
-	return {
-		init: function($ct) {
-			$ct.each(function(index, node) {
-				new _Animate($(node))
-			})
+	_Animate.prototype.moveEnd = function(obj) {
+		var len = obj.value.length;
+		if(document.selection) {
+			var sel = obj.createTextRange();
+			sel.moveStart('character', len);
+			sel.collapse();
+			sel.select();
+		} else if(typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+			obj.selectionStart = obj.selectionEnd = len;
 		}
 	}
+
+
+_Animate.prototype.dragNode = function(node) {
+	var that = this
+	$(document).on('mousedown', 'li', function(e) {
+		if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
+		if(e.target.className == 'items_children_li') {
+			e.preventDefault() // 阻止默认事件
+			var x = e.pageX,
+				y = e.pageY,
+				_this = $(this), //点击的选中块
+				w = _this.width(),
+				h = _this.height(),
+				w2 = w / 2,
+				h2 = h / 2
+			p = _this.offset(),
+				left = p.left,
+				ltop = p.top,
+				window.kp_only = true
+			//添加虚线框架
+			_this.before('<li id="kp_widget_holder"></li>')
+			var wid = $('#kp_widget_holder')
+			wid.css({
+				"border": "2px dashed #ccc",
+				"height": _this.outerHeight(true),
+			})
+
+			//保持原有宽高
+			_this.css({
+				"width": w,
+				"height": h,
+				"position": "absolute",
+				opacity: 0.8,
+				"z-index": 99,
+				"left": p.left,
+				"top": p.top
+			});
+
+			$(document).on('mousemove', 'li', function(e) {
+
+				e.preventDefault();
+				// 移动选中块
+				var l = p.left + e.pageX - x;
+				var t = p.top + e.pageY - y;
+				_this.css({
+					"left": l,
+					"top": t
+				});
+				// 选中块的中心坐标
+				var ml = l + w2;
+				var mt = t + h2;
+				// 遍历所有块的坐标
+				$(document).find('.content_inside_items_children').children().not($(_this)).not(wid).each(function(i) {
+					var obj = $(this);
+					var p = obj.offset();
+					var a1 = p.left;
+					var a2 = p.left + obj.width();
+					var a3 = p.top;
+					var a4 = p.top + obj.height();
+					// 移动虚线框
+					if(a1 < ml && ml < a2 && a3 < mt && mt < a4) {
+						if(!obj.next("#kp_widget_holder").length) {
+							wid.insertAfter(this);
+						} else {
+							wid.insertBefore(this);
+						}
+						return;
+					}
+				});
+			})
+
+			$(document).on('mouseup', 'li', function() {
+				$(document).off('mouseup').off('mousemove');
+				// 检查容器为空的情况
+				$(document).find('.content_inside_items_children').each(function() {
+					var obj = $(this).children();
+					var len = obj.length;
+					if(len == 1 && obj.is(_this)) {
+						$("<div></div>").appendTo(this).attr("class", "kp_widget_block").css({
+							"height": 50
+						});
+					} else if(len == 2 && obj.is(".kp_widget_block")) {
+						$(this).children(".kp_widget_block").remove();
+					}
+				});
+				// 拖拽回位，并删除虚线框
+				var p2 = wid.position();
+				$(e.target).animate({
+					"left": p2.left,
+					"top": p2.top
+				}, 100, function() {
+					wid.replaceWith($(e.target));
+					$(e.target).removeAttr("style");
+					window.kp_only = null;
+				});
+				return false
+			});
+		} //去除所有非li元素的条件
+	})
+}
+_Animate.prototype.dragParent = function(node) {
+	var that = this
+	$(document).on('mousedown', '.content_inside_li_title', function(e) {
+		if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
+		if(e.target.className == 'content_inside_li_title') {
+			$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
+			$(e.target).parent().parent().find('.add_li').fadeOut()
+			e.preventDefault() // 阻止默认事件
+			var x = e.pageX,
+				y = e.pageY,
+				_this = $(e.target).parent(), //点击的选中块
+				w = _this.width(),
+				h = _this.find('.content_inside_li_title').height(),
+				w2 = w / 2,
+				h2 = h / 2
+			p = _this.offset(),
+				left = p.left,
+				ltop = p.top,
+				window.kp_only = true
+
+			_this.before('<li id="kp_widget_holder"></li>')
+			var wid = $('#kp_widget_holder')
+			wid.css({
+				"border": "2px dashed #ccc",
+				"height": _this.find('.content_inside_li_title').height(),
+			})
+			//保持原有宽高
+			_this.css({
+				"width": w,
+				"height": h,
+				"position": "absolute",
+				opacity: 0.8,
+				"z-index": 99,
+				"left": p.left,
+				"top": p.top
+			});
+			$(document).on('mousemove', '.content_inside_li_title', function(e) {
+				e.preventDefault();
+				// 移动选中块
+				var l = p.left + e.pageX - x;
+				var t = p.top + e.pageY - y;
+				_this.css({
+					"left": l,
+					"top": t
+				});
+				// 选中块的中心坐标
+				var ml = l + w2;
+				var mt = t + h2;
+				// 遍历所有块的坐标
+				$(document).find('.content_inside_items').children().not($(_this)).not(wid).each(function(i) {
+					var obj = $(this);
+					var p = obj.offset();
+					var a1 = p.left;
+					var a2 = p.left + obj.width();
+					var a3 = p.top;
+					var a4 = p.top + obj.height();
+					// 移动虚线框
+					if(a1 < ml && ml < a2 && a3 < mt && mt < a4) {
+						if(!obj.next("#kp_widget_holder").length) {
+							wid.insertAfter(this);
+						} else {
+							wid.insertBefore(this);
+						}
+						return;
+					}
+				});
+			})
+			$(document).on('mouseup', '.content_inside_items', function() {
+
+				$(document).off('mouseup').off('mousemove');
+				// 检查容器为空的情况
+				$(document).find('.content_inside_items').each(function() {
+					var obj = $(this).children();
+					var len = obj.length;
+					if(len == 1 && obj.is(_this)) {
+						$("<li></li>").appendTo(this).attr("class", "kp_widget_block").css({
+							"height": 50
+						});
+					} else if(len == 2 && obj.is(".kp_widget_block")) {
+						$(this).children(".kp_widget_block").remove();
+					}
+				});
+				// 拖拽回位，并删除虚线框
+				var p2 = wid.position();
+				$(e.target).parent().animate({
+					"left": p2.left,
+					"top": p2.top
+				}, 100, function() {
+					wid.replaceWith($(e.target).parent());
+					$(e.target).parent().removeAttr("style");
+					window.kp_only = null;
+				});
+				$(e.target).parent().find('.content_inside_items_children').fadeIn()
+				$(e.target).parent().find('.add_li').fadeIn()
+				return false
+			});
+		}
+
+	})
+}
+return {
+	init: function($ct) {
+		$ct.each(function(index, node) {
+			new _Animate($(node))
+		})
+	}
+}
 })()
 
 Animate.init($('body'))
