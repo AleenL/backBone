@@ -7,16 +7,16 @@ var Animate = (function() {
 
 	//绑定元素，初始化数据
 	_Animate.prototype.init = function() {
-			var $foldingBtn = this.$foldingBtn = this.$ct.find('.folding_page'),
-				$ulPage = this.$ulPage = this.$ct.find('.content_inside_items_children'),
-				$addChild = this.$addChild = this.$ct.find('.add_li'),
-				$addParent = this.$addParent = this.$ct.find('.add_new_parent'),
-				$parentUlPage = this.$parentUlPage = this.$ct.find('.content_inside_items'),
-				$inputText = this.$inputText = this.$ct.find('.text_of')
+		var $foldingBtn = this.$foldingBtn = this.$ct.find('.folding_page'),
+			$ulPage = this.$ulPage = this.$ct.find('.content_inside_items_children'),
+			$addChild = this.$addChild = this.$ct.find('.add_li'),
+			$addParent = this.$addParent = this.$ct.find('.add_new_parent'),
+			$parentUlPage = this.$parentUlPage = this.$ct.find('.content_inside_items'),
+			$inputText = this.$inputText = this.$ct.find('.text_of')
 
-			this.dragNode(this.$ulPage)
-		}
-		//绑定事件
+		this.dragNode(this.$ulPage)
+	}
+	//绑定事件
 	_Animate.prototype.bind = function() {
 		var that = this
 		$(document).on('click', '.add_li', function(e) {
@@ -71,28 +71,27 @@ var Animate = (function() {
 	_Animate.prototype.dragNode = function(node) {
 		var that = this
 
-		$(document).off("mousedown").mousedown('li', function(e) {
+		$(document).on('mousedown', 'li', function(e) {
 			//console.log(e.target.className)
-			if (e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
-			if (e.target.className == 'content_inside_li_title' || e.target.className == 'items_children_li') {
-				if (e.target.nodeName == 'DIV') {
+			if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
+			if(e.target.className == 'items_children_li') {
+				/*if (e.target.nodeName == 'DIV') {
 					$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
 					$(e.target).parent().parent().find('.add_li').fadeOut()
-				}
+				}*/
 				e.preventDefault() // 阻止默认事件
-
 				var x = e.pageX,
 					y = e.pageY,
-					_this = $(e.target), //点击的选中块
+					_this = $(this), //点击的选中块
 					w = _this.width(),
 					h = _this.height(),
 					w2 = w / 2,
 					h2 = h / 2
-				p = _this.position(),
-					o = _this.offset(),
-					left = p.left,
-					ltop = p.top,
-					kp_only = true
+				o = _this.offset(),
+					p = _this.position(),
+					left = o.left,
+					ltop = o.top,
+					window.kp_only = true
 
 				//添加虚线框架
 				_this.before('<li id="kp_widget_holder"></li>')
@@ -109,16 +108,18 @@ var Animate = (function() {
 					"position": "absolute",
 					opacity: 0.8,
 					"z-index": 99,
-					"left": left,
-					"top": ltop
+					"left": o.left,
+					"top": o.top
 				});
 
-				$(document).mousemove(function(e) {
+				$(document).on('mousemove', 'li', function(e) {
 
 					e.preventDefault();
 					// 移动选中块
-					var l = left + e.pageX - x;
-					var t = ltop + e.pageY - y;
+					var l = p.left + e.pageX - x;
+					var t = p.top + e.pageY - y;
+					var ll = left + e.pageX - x;
+					var tt = ltop + e.pageY - y;
 					_this.css({
 						"left": l,
 						"top": t
@@ -126,19 +127,20 @@ var Animate = (function() {
 					// 选中块的中心坐标
 					var ml = l + w2;
 					var mt = t + h2;
+					var mll = ll + w2;
+					var mtt = tt + h2
 					// 遍历所有块的坐标
-					$(node).children().not(_this).not(wid).each(function(i) {
-						var obj = $(e.target);
+					$(node).children().not($(_this)).not(wid).each(function(i) {
+						var obj = $(this);
 						var p = obj.offset();
 						var a1 = p.left;
 						var a2 = p.left + obj.width();
 						var a3 = p.top;
 						var a4 = p.top + obj.height();
-						console.log(this)
-							// 移动虚线框
-						if (a1 < ml && ml < a2 && a3 < mt && mt < a4) {
+						// 移动虚线框
+						if(a1 < mll && mll < a2 && a3 < mtt && mtt < a4) {
 							console.log(1)
-							if (!obj.next("#kp_widget_holder").length) {
+							if(!obj.next("#kp_widget_holder").length) {
 								wid.insertAfter(this);
 							} else {
 								wid.insertBefore(this);
@@ -147,35 +149,35 @@ var Animate = (function() {
 						}
 					});
 				})
+
+				$(document).on('mouseup', 'li', function() {
+					$(document).off('mouseup').off('mousemove');
+
+					// 检查容器为空的情况
+					$(node).each(function() {
+						var obj = $(document).children();
+						var len = obj.length;
+						if(len == 1 && obj.is($(e.target))) {
+							$("<li></li>").appendTo(document).attr("class", "kp_widget_block").css({
+								"height": 100
+							});
+						} else if(len == 2 && obj.is(".kp_widget_block")) {
+							$(document).children(".kp_widget_block").remove();
+						}
+					});
+					console.log($(document),$(e.target),$(document),document)
+					// 拖拽回位，并删除虚线框
+					var p2 = wid.position();
+					$(e.target).animate({
+						"left": p2.left,
+						"top": p2.top
+					}, 100, function() {
+						wid.replaceWith($(e.target));
+						$(e.target).removeAttr("style");
+						window.kp_only = null;
+					});
+				});
 			} //去除所有非li元素的条件
-			$(document).mouseup(function() {
-				if (e.target.nodeName == "DIV") {
-					$(e.target).parent().parent().find('.content_inside_items_children').fadeIn()
-				}
-				$(document).off('mouseup').off('mousemove');
-				// 检查容器为空的情况
-				$(container).each(function() {
-					var obj = $(this).children();
-					var len = obj.length;
-					if (len == 1 && obj.is(_this)) {
-						$("<li></li>").appendTo(this).attr("class", "kp_widget_block").css({
-							"height": 100
-						});
-					} else if (len == 2 && obj.is(".kp_widget_block")) {
-						$(this).children(".kp_widget_block").remove();
-					}
-				});
-				// 拖拽回位，并删除虚线框
-				var p = wid.offset();
-				_this.animate({
-					"left": p.left,
-					"top": p.top
-				}, 100, function() {
-					_this.removeAttr("style");
-					wid.replaceWith(_this);
-					kp_only = null;
-				});
-			});
 		})
 	}
 
