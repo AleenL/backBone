@@ -26,7 +26,7 @@ var Animate = (function() {
         var that = this
         $(document).on('click', '.add_li', function(e) {
             var childIndex = that.$addChild.index(this);
-            newLi = "<li class='items_children_li'><p class='.text_of' style='width:100px'></p><p class='video_link add_link_color'>+关联视频</p></li>"
+            newLi = "<li class='items_children_li'><p><span class='text_of'>请输入标题</span></p><p class='video_link add_link_color'>+关联视频</p></li>"
             $(this).parent().find('.content_inside_items_children').append(newLi)
         })
 
@@ -50,12 +50,13 @@ var Animate = (function() {
 
 
         $(document).on('click', '.text_of', function(e) {
+        	console.log(1)
             var td = $(e.target);
             var txt = td.text();
             var input = $("<input class='input_in' type='text' style='width:200px' value='" + txt + "'/>");
             td.html(input);
             td.css({
-                'overflow': 'visible	',
+                
                 'position': 'absolute',
                 'z-index': '22',
                 'text-overflow': 'normal',
