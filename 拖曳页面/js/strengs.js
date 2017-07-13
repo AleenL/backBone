@@ -15,6 +15,7 @@ var Animate = (function() {
 			$inputText = this.$inputText = this.$ct.find('.text_of')
 
 		this.dragNode(this.$ulPage)
+		this.dragParent(this.$ulPage)
 	}
 	//绑定事件
 	_Animate.prototype.bind = function() {
@@ -22,11 +23,11 @@ var Animate = (function() {
 		$(document).on('click', '.add_li', function(e) {
 			var childIndex = that.$addChild.index(this);
 			newLi = "<li class='items_children_li'><p></p><p class='video_link add_link_color'>+关联视频</p></li>"
-			$(this).siblings('ul').append(newLi)
+			$(this).parent().find('.content_inside_items_children').append(newLi)
 		})
 
 		this.$addParent.on('click', function() {
-			parentLi = "<li><div class='content_inside_li_title'><h3><span class='folding_page'>></span><span class='text_of'>请输入标题</span></h3><div class='icon'><i>托</i><i>删</i></div></div><ul class='content_inside_items_children'></ul><div class='add_li add_link_color'><p><span>+</span>新增</p></div></li>"
+			parentLi = "<li class='content_inside_li'><div class='content_inside_li_title'><h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3><div class='icon'><i>托</i><i>删</i></div></div><ul class='content_inside_items_children'></ul><div class='add_li'><p><span>+</span>新增</p></div></li>"
 			that.$parentUlPage.append(parentLi)
 		})
 
@@ -70,15 +71,11 @@ var Animate = (function() {
 
 	_Animate.prototype.dragNode = function(node) {
 		var that = this
-
 		$(document).on('mousedown', 'li', function(e) {
-			//console.log(e.target.className)
+			console.log(e.target.nodeName)
 			if(e.which != 1 || $(e.target).is("input, textarea") || window.kp_only) return false; //清除非左击的事件
 			if(e.target.className == 'items_children_li') {
-				/*if (e.target.nodeName == 'DIV') {
-					$(e.target).parent().parent().find('.content_inside_items_children').fadeOut()
-					$(e.target).parent().parent().find('.add_li').fadeOut()
-				}*/
+				
 				e.preventDefault() // 阻止默认事件
 				var x = e.pageX,
 					y = e.pageY,
@@ -87,12 +84,10 @@ var Animate = (function() {
 					h = _this.height(),
 					w2 = w / 2,
 					h2 = h / 2
-				o = _this.offset(),
-					p = _this.position(),
-					left = o.left,
-					ltop = o.top,
+				p = _this.offset(),
+					left = p.left,
+					ltop = p.top,
 					window.kp_only = true
-
 				//添加虚线框架
 				_this.before('<li id="kp_widget_holder"></li>')
 				var wid = $('#kp_widget_holder')
@@ -108,8 +103,8 @@ var Animate = (function() {
 					"position": "absolute",
 					opacity: 0.8,
 					"z-index": 99,
-					"left": o.left,
-					"top": o.top
+					"left": p.left,
+					"top": p.top
 				});
 
 				$(document).on('mousemove', 'li', function(e) {
@@ -118,8 +113,6 @@ var Animate = (function() {
 					// 移动选中块
 					var l = p.left + e.pageX - x;
 					var t = p.top + e.pageY - y;
-					var ll = left + e.pageX - x;
-					var tt = ltop + e.pageY - y;
 					_this.css({
 						"left": l,
 						"top": t
@@ -127,10 +120,8 @@ var Animate = (function() {
 					// 选中块的中心坐标
 					var ml = l + w2;
 					var mt = t + h2;
-					var mll = ll + w2;
-					var mtt = tt + h2
 					// 遍历所有块的坐标
-					$(node).children().not($(_this)).not(wid).each(function(i) {
+					$(document).find('.content_inside_items_children').children().not($(_this)).not(wid).each(function(i) {
 						var obj = $(this);
 						var p = obj.offset();
 						var a1 = p.left;
@@ -138,8 +129,7 @@ var Animate = (function() {
 						var a3 = p.top;
 						var a4 = p.top + obj.height();
 						// 移动虚线框
-						if(a1 < mll && mll < a2 && a3 < mtt && mtt < a4) {
-							console.log(1)
+						if(a1 < ml && ml < a2 && a3 < mt && mt < a4) {
 							if(!obj.next("#kp_widget_holder").length) {
 								wid.insertAfter(this);
 							} else {
@@ -152,20 +142,18 @@ var Animate = (function() {
 
 				$(document).on('mouseup', 'li', function() {
 					$(document).off('mouseup').off('mousemove');
-
 					// 检查容器为空的情况
-					$(node).each(function() {
-						var obj = $(document).children();
+					$(document).find('.content_inside_items_children').each(function() {
+						var obj = $(this).children();
 						var len = obj.length;
-						if(len == 1 && obj.is($(e.target))) {
-							$("<li></li>").appendTo(document).attr("class", "kp_widget_block").css({
-								"height": 100
+						if(len == 1 && obj.is(_this)) {
+							$("<div></div>").appendTo(this).attr("class", "kp_widget_block").css({
+								"height": 50
 							});
 						} else if(len == 2 && obj.is(".kp_widget_block")) {
-							$(document).children(".kp_widget_block").remove();
+							$(this).children(".kp_widget_block").remove();
 						}
 					});
-					console.log($(document),$(e.target),$(document),document)
 					// 拖拽回位，并删除虚线框
 					var p2 = wid.position();
 					$(e.target).animate({
@@ -176,11 +164,18 @@ var Animate = (function() {
 						$(e.target).removeAttr("style");
 						window.kp_only = null;
 					});
+					return false
 				});
 			} //去除所有非li元素的条件
 		})
 	}
-
+	_Animate.prototype.dragParent = function(node){
+		var that = this
+		$(document).on('mousedown','.content_inside_li_title',function(e){
+			$(e.target).find('.content_inside_items_children').fadeOut()
+			$(e.target).find('.add_li').fadeOut()
+					
+		})
 	return {
 		init: function($ct) {
 			$ct.each(function(index, node) {
