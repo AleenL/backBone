@@ -27,7 +27,7 @@ var Animate = (function() {
 		})
 
 		this.$addParent.on('click', function() {
-			parentLi = "<li class='content_inside_li'><div class='content_inside_li_title'><h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3><div class='icon'><i>托</i><i>删</i></div></div><ul class='content_inside_items_children'></ul><div class='add_li'><p><span>+</span>新增</p></div></li>"
+			parentLi = "<li class='content_inside_li'><div class='content_inside_li_title'><h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3><div class='icon'><i>托</i><i class='deleted_node'>删</i></div></div><ul class='content_inside_items_children'></ul><div class='add_li'><p><span>+</span>新增</p></div></li>"
 			that.$parentUlPage.append(parentLi)
 		})
 
@@ -36,7 +36,13 @@ var Animate = (function() {
 			$('.content_inside_items_children').eq(Index).toggle('normal')
 			$('.add_li').eq(Index).toggle('normal')
 		})
-
+		
+		$(document).on('click', '.deleted_node', function(e) {
+			var Index = $('.deleted_node').index(this)
+			
+			$('.content_inside_li').eq(Index).fadeOut()
+		})
+		
 		$(document).on('click', '.text_of', function(e) {
 			var td = $(e.target);
 			var txt = td.text();

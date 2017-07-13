@@ -12,7 +12,6 @@
 				padding: 0;
 				box-sizing: border-box;
 				list-style: none;
-				
 			}
 			
 			.add_link_color {
@@ -69,17 +68,24 @@
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li {
 				margin-bottom: 20px;
-				
 			}
 			
-			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li>div {
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li div:nth-child(3){
+				width: 790px;
+				height: 40px;
+				line-height: 40px;
+				text-indent: 1rem;
+				border: 1px solid #aaa;
+				background: rgb(251, 248, 244);
+			}
+			
+			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_li_title {
 				display: flex;
 				height: 50px;
 				justify-content: space-between;
 				align-content: center;
-			line-height: 50px;
+				line-height: 50px;
 				border: 1px solid #ddd;
-				background: rgb(251, 248, 244);
 				position: relative;
 			}
 			
@@ -104,7 +110,6 @@
 				top: 30px;
 				left: -30px;
 				display: none;
-				
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children {
@@ -140,6 +145,7 @@
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .content_inside_items_children li p:nth-child(2) span:last-child {
 				margin-left: 20px;
+				
 			}
 			
 			.layout .content_layout .content_inside_layout .content_inside_box .content_inside_items li .add_li {
@@ -194,13 +200,24 @@
 				width: 25px;
 				height: 25px;
 				text-align: center;
-				cursor: pointer;
 			}
 			
 			.layout .content_layout .content_inside_layout .add_new_parent {
 				width: 200px;
 				height: 200px;
-				cursor: pointer;
+			}
+			
+			.deleted_node {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+			}
+			
+			.content_inside_li_title,.items_children_li{
+				cursor: move;
+			}
+			.content_inside_li_title h3,.content_inside_li_title .icon,.items_children_li p{
+				cursor: default;
 			}
 		</style>
 	</head>
@@ -222,7 +239,7 @@
 							<li class='content_inside_li'>
 								<div class='content_inside_li_title'>
 									<h3><span class='folding_page'>></span><span  class='text_of'>01 心理咨询试听</span></h3>
-									<div class='icon'><i>托</i><i>删</i></div>
+									<div class='icon'><i>托</i><i class='deleted_node'>删</i></div>
 								</div>
 
 								<ul class='content_inside_items_children'>
@@ -232,13 +249,13 @@
 									</li>
 								</ul>
 								<div class='add_li'>
-										<p><span>+</span>新增</p>
+									<p><span>+</span>新增</p>
 								</div>
 							</li>
 							<li class='content_inside_li'>
-								<div  class='content_inside_li_title'>
+								<div class='content_inside_li_title'>
 									<h3><span class='folding_page'>></span><span class='text_of'>02 二级论文指导</span></h3>
-									<div class='icon'><i>托</i><i>删</i></div>
+									<div class='icon'><i>托</i><i class='deleted_node'>删</i></div>
 								</div>
 								<ul class='content_inside_items_children'>
 									<li class='items_children_li'>
@@ -255,7 +272,7 @@
 									</li>
 								</ul>
 								<div class='add_li'>
-										<p><span>+</span>新增</p>
+									<p><span>+</span>新增</p>
 								</div>
 							</li>
 						</ul>
