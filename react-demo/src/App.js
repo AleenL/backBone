@@ -3,7 +3,7 @@ import './App.css';
 import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 import 'normalize.css';
-import getCity from './getCity';
+import GetCity from './getCity';
 import $ from 'jquery'
 
  class App extends Component {
@@ -28,7 +28,7 @@ import $ from 'jquery'
         
         return ( 
         	<div className = "App" >
-            	//<getCity city='dd'/>
+            	<GetCity title = {this.getCity()}/>
             	<div className = 'inputWrapper'>
             		<TodoInput content = { this.state.newTodo } /*定义content为this.state.newTodo*/ 
             		onChange = {this.changeTitle.bind(this)} 
@@ -41,14 +41,7 @@ import $ from 'jquery'
     }
     
 
-    delete(event, todo){
-    	todo.deleted = true
-    	this.setState(this.state)//重置了state的值
-
-    }
-    
-    componentWillUpdate(){
-    	console.log(1)
+	getCity() {
     	let cityUrl = "https://api.map.baidu.com/location/ip?ak=O6SDTtgTtymLR2UzklNO9eYolcZLXI7Q";
         $.ajax({
             url:cityUrl,
@@ -56,12 +49,18 @@ import $ from 'jquery'
             async: false,
             dataType: 'jsonp',
             success: function(data){
-              this.setState({
-              	city:data.content.adress
-              })
+            	return 1
                }
           })
     }
+    
+
+    delete(event, todo){
+    	todo.deleted = true
+    	this.setState(this.state)//重置了state的值
+
+    }
+    
     
     toggle(e,todo){
     	todo.status = todo.status === 'completed' ? '' : 'completed' //判断todo.states是否等于completed，
