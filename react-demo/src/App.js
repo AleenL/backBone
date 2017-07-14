@@ -28,7 +28,7 @@ import $ from 'jquery'
         
         return ( 
         	<div className = "App" >
-            	<getCity />
+            	//<getCity city='dd'/>
             	<div className = 'inputWrapper'>
             		<TodoInput content = { this.state.newTodo } /*定义content为this.state.newTodo*/ 
             		onChange = {this.changeTitle.bind(this)} 
@@ -40,17 +40,14 @@ import $ from 'jquery'
         )
     }
     
-    componentWillUpdate(){
-    	//console.log(1)
-    	
-    }
+
     delete(event, todo){
     	todo.deleted = true
     	this.setState(this.state)//重置了state的值
 
     }
     
-    gatCity(e){
+    componentWillUpdate(){
     	console.log(1)
     	let cityUrl = "https://api.map.baidu.com/location/ip?ak=O6SDTtgTtymLR2UzklNO9eYolcZLXI7Q";
         $.ajax({
@@ -59,7 +56,9 @@ import $ from 'jquery'
             async: false,
             dataType: 'jsonp',
             success: function(data){
-              console.log(data)
+              this.setState({
+              	city:data.content.adress
+              })
                }
           })
     }
