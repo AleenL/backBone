@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import registerServiceWorker from './registerServiceWorker';
-import App from './App';
+import React from 'react'
+import { render } from 'react-dom'
+import { hashHistory } from 'react-router'
 
+import RouteMap from './router/routerMap'
+import 'normalize.css'
 
 ReactDOM.render( 
 	<App />,
